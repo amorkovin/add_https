@@ -3,7 +3,7 @@
   Plugin Name: Add httpS
   Description: Заменяет http на https по умному. Делает редирект с http на https. Меняет в option "siteurl", "home" http на https. В functions.php активной темы менять http на https.
   Author: Andrey Morkovin
-  Version: 3.5
+  Version: 3.6
  */
 
 add_action( 'init', 'https_morkovin' );
@@ -57,11 +57,11 @@ function add_https_buffer_callback($buffer) {
     return $buffer; 
 }
 
-function buffer_start() { ob_start("add_https_buffer_callback"); } 
-function buffer_end() { ob_end_flush(); }
+function morkovin_add_https_buffer_start() { ob_start("add_https_buffer_callback"); } 
+function morkovin_add_https_buffer_end() { ob_end_flush(); }
 
-add_action('after_setup_theme', 'buffer_start');
-add_action('shutdown', 'buffer_end');
+add_action('after_setup_theme', 'morkovin_add_https_buffer_start');
+add_action('shutdown', 'morkovin_add_https_buffer_end');
 
 register_deactivation_hook( __FILE__, 'morkovin_add_https_uninstall');
 function morkovin_add_https_uninstall() {
